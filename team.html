@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Members - CSMJU Yearbooks</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wdth,wght@0,75..100,300..800;1,75..100,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet"> 
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <script>
+        // ฟังก์ชันดึงพารามิเตอร์จาก URL
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // ดึงหมายเลขรุ่นจาก URL
+            const classNumber = getQueryParam('class');
+
+            // อัปเดตเนื้อหาของ h4 หรือทำอย่างอื่นตามต้องการ
+            if (classNumber) {
+                document.getElementById('class-title').textContent = `รายชื่อสมาชิกรุ่นที่ ${classNumber}`;
+            }
+        });
+    </script>
+</head>
+
+<body>
+
+     <!-- Spinner Start -->
+     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+    <!-- Navbar Start -->
+    <div class="container-fluid position-relative p-0">
+        <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+            <a href="" class="navbar-brand p-0">
+                <h1 class="text-green">Members CSMJU Yearbooks</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto py-0">
+                    <a href="index.html" class="nav-item nav-link">หน้าหลัก</a>
+                    <a href="team-section" class="nav-item nav-link">รายชื่อ</a>
+                    <a href="#team-section" class="nav-item nav-link">โปรไฟล์</a>
+                </div>
+                <button class="btn btn-primary btn-md-square d-flex flex-shrink-0 mb-3 mb-lg-0 rounded-circle me-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search"></i></button>
+            </div>
+        </nav>
+    </div>
+    <!-- Navbar End -->
+
+    <!-- Header Start -->
+    <div class="container-fluid bg-breadcrumb">
+        <div class="container text-center py-5" style="max-width: 900px;">
+            <h4 id="class-title" class="text-white display-4 mb-4 wow fadeInDown" data-wow-delay="0.1s">รายชื่อสมาชิกรุ่นที่</h4>
+            <ol class="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown" data-wow-delay="0.3s">
+            </ol>
+        </div>
+    </div>
+    <!-- Header End -->
+
+    <!-- Modal Start -->
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="searchModalLabel">Search</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="search-form" class="d-flex position-relative">
+                        <input type="search" id="search-input" class="form-control search-input" placeholder="Search..." aria-label="Search">
+                        <button class="btn search-button" type="submit"><i class="fas fa-search"></i></button>
+                        <div id="autocomplete-results" class="autocomplete-results"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal End -->
+
+    <!-- Team Start -->
+    <div id="team-section" class="container-fluid team py-4">
+        <div class="text-center mx-auto pb-2 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 1500px;">
+            <h1 class="custom-heading text-capitalize mb-2">จำนวนสมาชิกทั้งหมดในรุ่น</h1>
+        </div>
+        <div class="content"></div>
+            <div class="container py-4">
+                <div class="row g-4" id="team-members">
+                <!-- Members will be inserted here by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Team End -->
+
+    <!-- JavaScript to dynamically create team members -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const teamContainer = document.getElementById('team-members');
+            const memberCountElement = document.querySelector('.custom-heading');
+            const team = [
+            { id: 1, name: 'เดวิด เจมส์', img: 'images/p1.jpg' },
+            { id: 2, name: 'ทอม วิลสัน', img: 'images/p2.jpg' },
+            { id: 3, name: 'จอห์น โด', img: 'images/p3.jpg' },
+            { id: 4, name: 'โดม สมิธ', img: 'images/p4.jpg' },
+            { id: 5, name: 'ไมเคิล บราวน์', img: 'images/p5.jpg' },
+            { id: 6, name: 'โอลิเวีย เดวิส', img: 'images/p6.jpg' },
+            { id: 7, name: 'วิลเลียม การ์เซีย', img: 'images/p7.jpg' },
+            { id: 8, name: 'โซเฟีย มาร์ติเนซ', img: 'images/p8.jpg' },
+            { id: 9, name: 'เลียม โรดริเกซ', img: 'images/p9.jpg' },
+            { id: 10, name: 'อิซา เฮอร์นันเดซ', img: 'images/p10.jpg' },
+            { id: 11, name: 'อีธาน วิลสัน', img: 'images/p11.jpg' },
+            { id: 12, name: 'เอวา จอห์นสัน', img: 'images/p12.jpg' },
+            { id: 13, name: 'เมสัน ลี', img: 'images/p13.jpg' },
+            { id: 14, name: 'ชาร์ล็อตต์ บราวน์', img: 'images/p14.jpg' },
+            { id: 15, name: 'แฮร์รี่ มอร์แกน', img: 'images/p15.jpg' },
+            { id: 16, name: 'วิกเตอร์ แอนเดอร์สัน', img: 'images/p16.jpg' },
+
+];
+
+
+            // สร้างทีม
+            team.forEach((member, index) => {
+                const memberHtml = `
+                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="${(index % 50) * 0.1}s">
+                        <div class="team-item">
+                            <div class="team-img">
+                                <img src="${member.img}" class="img-fluid" alt="${member.name}">
+                            </div>
+                            <div class="team-title">
+                                <h4 class="mb-0">${member.name}</h4>
+                                <a href="profile.html?id=${member.id}" class="btn btn-primary mt-3">ดูโปรไฟล์</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                teamContainer.innerHTML += memberHtml;
+            });
+            // อัปเดตจำนวนสมาชิก
+            const memberCount = team.length;
+            memberCountElement.textContent = `จำนวนสมาชิกทั้งหมดในรุ่น = ${memberCount}`;
+
+            // ฟังก์ชันเพื่อดึงพารามิเตอร์จาก URL
+            function getQueryParam(param) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(param);
+            }
+
+            // ดึงหมายเลขรุ่นจาก URL
+            const classNumber = getQueryParam('class');
+
+            // อัปเดตเนื้อหาของ h4
+            if (classNumber) {
+                document.getElementById('class-title').textContent = `รายชื่อสมาชิกรุ่นที่ ${classNumber}`;
+            }
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            const backToTopButton = document.getElementById('back-to-top');
+
+            // เมื่อเลื่อนหน้าจอ
+        window.addEventListener('scroll', function () {
+            if (window.scrollY > 200) {
+            backToTopButton.classList.add('show');
+                } else {
+                    backToTopButton.classList.remove('show');
+                        }
+            });
+            
+    });
+
+
+    </script>
+
+    <button id="back-to-top" class="btn btn-primary" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <i class="bi bi-chevron-up"></i>
+    </button>
+
+    
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 ทำเนียบรุ่น Computer Science MJU</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+        <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/counterup/counterup.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+</body>
+
+</html>
